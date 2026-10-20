@@ -1,4 +1,4 @@
-# News Pulse: Indian Express vs Jansatta (Jan–Aug 2024)
+# Newspaper NLP: Indian Express vs Jansatta (Jan–Aug 2024)
 
 An NLP course project that compares what an English newspaper (**Indian Express**) and a Hindi newspaper from the same media group (**Jansatta**) covered from January to August 2024. Headlines are collected from the papers' sitemaps, classified into nine topics, and compared month by month, around key events, and by the people and places they mention. An interactive Streamlit dashboard presents the results.
 
@@ -32,9 +32,8 @@ newspaper-nlp/
 ├── baselines.py              # 5. 24 classifiers, chosen by cross-validation, scored on the test set
 ├── analysis.py               # 6. topic trends, key events, named entities, findings.md
 ├── dashboard.py              # 7. Streamlit dashboard
-├── news-scraper.service      # optional: systemd unit to run steps 1 on a Linux machine
 │
-├── ds/
+├── data/
 │   ├── raw/          ie_2024.csv, jansatta_2024.csv                    (scraped)
 │   ├── clean/        <paper>_clean.csv, _per_day.csv, _sections.csv
 │   ├── mapping/      <paper>_sections_mapped.csv                       (hand-made: section → category)
@@ -78,13 +77,13 @@ uv run headline_fetcher.py     # fills in the headlines; ~1.7 h per paper for Ja
 python clean_and_profile.py ds/raw/ie_2024.csv ds/raw/jansatta_2024.csv
 ```
 - Removes duplicate URLs, videos, live blogs, web stories, horoscopes, very short headlines and same-day duplicates, and prints the row count after each step.
-- Move the `_clean.csv`, `_per_day.csv` and `_sections.csv` outputs into `ds/clean/`.
+- Move the `_clean.csv`, `_per_day.csv` and `_sections.csv` outputs into `data/clean/`.
 - **Manual step:** fill in the `category` column of each `_sections.csv` (one of the 9 topics, `Mixed` for general sections such as `cities`/`national`, or `Drop` for opinion, columns and sponsored content). Save the results as `ds/mapping/<paper>_sections_mapped.csv`.
 
 ```bash
 uv run build_training_data.py
 ```
-Writes `ds/phase2/` (every kept article with its category) and `ds/labels/`:
+Writes `data/phase2/` (every kept article with its category) and `data/labels/`:
 - `gold_to_label.csv`: the **test set**, 250 random headlines per paper, kept out of training.
 - `candidates_to_check.csv`: Mixed-section headlines matching Weather or Crime keywords (English and Hindi), to be checked by hand.
 - `train_seed.csv`: training rows labelled by their URL section.
