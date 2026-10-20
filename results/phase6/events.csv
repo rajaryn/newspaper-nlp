@@ -1,0 +1,17 @@
+event,date,topic,paper,baseline_share_before,peak_share,peak_date,days_from_event_to_peak
+Ram temple consecration,2024-01-22,entity:Ayodhya,Indian Express,0.072,0.239,2024-01-22,0
+Ram temple consecration,2024-01-22,entity:Ayodhya,Jansatta,0.131,0.309,2024-01-22,0
+Kejriwal arrested by ED,2024-03-21,entity:Arvind Kejriwal,Indian Express,0.012,0.128,2024-03-22,1
+Kejriwal arrested by ED,2024-03-21,entity:Arvind Kejriwal,Jansatta,0.021,0.146,2024-03-22,1
+Lok Sabha results,2024-06-04,Politics,Indian Express,0.214,0.609,2024-06-04,0
+Lok Sabha results,2024-06-04,Politics,Jansatta,0.274,0.379,2024-06-02,-2
+T20 World Cup final,2024-06-29,Sports,Indian Express,0.078,0.111,2024-06-23,-6
+T20 World Cup final,2024-06-29,Sports,Jansatta,0.192,0.309,2024-06-29,0
+Wayanad landslides,2024-07-30,Weather/Environment,Indian Express,0.042,0.098,2024-07-30,0
+Wayanad landslides,2024-07-30,Weather/Environment,Jansatta,0.01,0.073,2024-07-31,1
+Paris Olympics opening,2024-07-26,Sports,Indian Express,0.061,0.174,2024-08-07,12
+Paris Olympics opening,2024-07-26,Sports,Jansatta,0.161,0.309,2024-08-04,9
+Kolkata RG Kar case,2024-08-09,Crime/Law,Indian Express,0.08,0.202,2024-08-22,13
+Kolkata RG Kar case,2024-08-09,Crime/Law,Jansatta,0.034,0.17,2024-08-18,9
+"Bangladesh unrest, Hasina resigns",2024-08-05,entity:Bangladesh,Indian Express,0.006,0.109,2024-08-07,2
+"Bangladesh unrest, Hasina resigns",2024-08-05,entity:Bangladesh,Jansatta,0.008,0.219,2024-08-06,1

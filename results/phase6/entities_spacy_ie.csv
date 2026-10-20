@@ -1,0 +1,61 @@
+type,entity,headlines
+GPE,India,1054
+ORG,BJP,954
+ORG,Congress,571
+GPE,Delhi,494
+GPE,US,462
+GPE,Mumbai,406
+PERSON,Lok Sabha,276
+GPE,Pakistan,236
+ORG,SC,214
+GPE,China,197
+GPE,Israel,187
+GPE,Russia,178
+GPE,Kerala,172
+PERSON,Khan,169
+GPE,Gujarat,168
+GPE,Gaza,164
+GPE,Ukraine,156
+GPE,Bengaluru,153
+ORG,ED,150
+GPE,Karnataka,143
+GPE,UK,137
+GPE,AI,128
+ORG,CBI,124
+ORG,Supreme Court,120
+PERSON,Rahul Gandhi,110
+GPE,Centre,108
+ORG,EC,105
+GPE,Iran,105
+GPE,Bangladesh,96
+ORG,Pune,95
+ORG,Apple,95
+ORG,IIT,92
+GPE,Bengal,91
+PERSON,Delhi HC,85
+PERSON,Haryana,85
+ORG,CM,84
+ORG,PM Modi,82
+ORG,TMC,82
+ORG,Trump,80
+ORG,Paris Olympics,77
+PERSON,Cong,76
+ORG,IND,74
+ORG,IMD,71
+ORG,UN,71
+ORG,BMC,71
+PERSON,Salman Khan,70
+ORG,Kejriwal,66
+PERSON,Biden,61
+PERSON,Aamir Khan,55
+PERSON,Putin,55
+PERSON,Jaishankar,53
+PERSON,Amitabh Bachchan,53
+PERSON,Bigg Boss,51
+PERSON,UPSC Key,50
+PERSON,Tamil Nadu,45
+PERSON,Akshay Kumar,41
+PERSON,MLA,40
+PERSON,Kangana Ranaut,38
+PERSON,Chandigarh,37
+PERSON,Alia Bhatt,36

@@ -1,0 +1,181 @@
+paper,topic,entities,headlines
+ie_2024,Business,United States,151
+ie_2024,Business,China,109
+ie_2024,Business,Russia / Ukraine,94
+ie_2024,Business,RBI,59
+ie_2024,Business,Israel / Gaza,56
+ie_2024,Business,Mumbai,42
+ie_2024,Business,Delhi,39
+ie_2024,Business,Karnataka,38
+ie_2024,Business,Maharashtra,27
+ie_2024,Business,Pakistan,24
+ie_2024,Crime/Law,Delhi,357
+ie_2024,Crime/Law,Karnataka,189
+ie_2024,Crime/Law,Supreme Court,173
+ie_2024,Crime/Law,Enforcement Directorate,120
+ie_2024,Crime/Law,CBI,98
+ie_2024,Crime/Law,Mumbai,98
+ie_2024,Crime/Law,West Bengal,86
+ie_2024,Crime/Law,Gujarat,69
+ie_2024,Crime/Law,United States,63
+ie_2024,Crime/Law,Punjab,62
+ie_2024,Entertainment,Shah Rukh Khan,159
+ie_2024,Entertainment,Salman Khan,88
+ie_2024,Entertainment,Mumbai,62
+ie_2024,Entertainment,Israel / Gaza,33
+ie_2024,Entertainment,Ayodhya,25
+ie_2024,Entertainment,Kerala,24
+ie_2024,Entertainment,United States,23
+ie_2024,Entertainment,Donald Trump,20
+ie_2024,Entertainment,Karnataka,16
+ie_2024,Entertainment,Tamil Nadu,15
+ie_2024,Health,United States,13
+ie_2024,Health,Delhi,9
+ie_2024,Health,Mumbai,6
+ie_2024,Health,Narendra Modi,3
+ie_2024,Health,Russia / Ukraine,3
+ie_2024,Health,West Bengal,3
+ie_2024,Health,Israel / Gaza,2
+ie_2024,Health,Joe Biden,2
+ie_2024,Health,NEET,2
+ie_2024,Health,Supreme Court,2
+ie_2024,Other,Delhi,195
+ie_2024,Other,Karnataka,192
+ie_2024,Other,United States,152
+ie_2024,Other,NEET,115
+ie_2024,Other,Mumbai,104
+ie_2024,Other,Israel / Gaza,90
+ie_2024,Other,Donald Trump,81
+ie_2024,Other,Maharashtra,78
+ie_2024,Other,Joe Biden,74
+ie_2024,Other,Gujarat,63
+ie_2024,Politics,BJP,1096
+ie_2024,Politics,Congress,651
+ie_2024,Politics,Narendra Modi,515
+ie_2024,Politics,Delhi,346
+ie_2024,Politics,AAP,218
+ie_2024,Politics,Supreme Court,150
+ie_2024,Politics,West Bengal,148
+ie_2024,Politics,Ayodhya,145
+ie_2024,Politics,Gujarat,145
+ie_2024,Politics,Karnataka,142
+ie_2024,Sports,IPL,198
+ie_2024,Sports,Pakistan,92
+ie_2024,Sports,Virat Kohli,73
+ie_2024,Sports,Rohit Sharma,44
+ie_2024,Sports,Bangladesh,40
+ie_2024,Sports,Delhi,40
+ie_2024,Sports,Mumbai,37
+ie_2024,Sports,United States,37
+ie_2024,Sports,China,31
+ie_2024,Sports,Punjab,27
+ie_2024,Tech/Science,United States,69
+ie_2024,Tech/Science,China,31
+ie_2024,Tech/Science,ISRO,25
+ie_2024,Tech/Science,Russia / Ukraine,21
+ie_2024,Tech/Science,Mumbai,13
+ie_2024,Tech/Science,Israel / Gaza,11
+ie_2024,Tech/Science,Karnataka,11
+ie_2024,Tech/Science,Donald Trump,9
+ie_2024,Tech/Science,Gujarat,7
+ie_2024,Tech/Science,Narendra Modi,6
+ie_2024,Weather/Environment,IMD,71
+ie_2024,Weather/Environment,Delhi,51
+ie_2024,Weather/Environment,Mumbai,48
+ie_2024,Weather/Environment,West Bengal,34
+ie_2024,Weather/Environment,Gujarat,28
+ie_2024,Weather/Environment,Kerala,22
+ie_2024,Weather/Environment,Karnataka,20
+ie_2024,Weather/Environment,Punjab,18
+ie_2024,Weather/Environment,Haryana,12
+ie_2024,Weather/Environment,United States,8
+jansatta_2024,Business,Narendra Modi,98
+jansatta_2024,Business,Ayodhya,40
+jansatta_2024,Business,Delhi,39
+jansatta_2024,Business,China,26
+jansatta_2024,Business,Supreme Court,20
+jansatta_2024,Business,RBI,18
+jansatta_2024,Business,United States,16
+jansatta_2024,Business,Bihar,15
+jansatta_2024,Business,Mumbai,13
+jansatta_2024,Business,Uttar Pradesh,12
+jansatta_2024,Crime/Law,Supreme Court,206
+jansatta_2024,Crime/Law,Delhi,193
+jansatta_2024,Crime/Law,Arvind Kejriwal,160
+jansatta_2024,Crime/Law,Enforcement Directorate,114
+jansatta_2024,Crime/Law,CBI,75
+jansatta_2024,Crime/Law,West Bengal,72
+jansatta_2024,Crime/Law,BJP,49
+jansatta_2024,Crime/Law,Uttar Pradesh,47
+jansatta_2024,Crime/Law,AAP,43
+jansatta_2024,Crime/Law,United States,38
+jansatta_2024,Entertainment,Shah Rukh Khan,96
+jansatta_2024,Entertainment,Salman Khan,90
+jansatta_2024,Entertainment,Ayodhya,53
+jansatta_2024,Entertainment,Narendra Modi,47
+jansatta_2024,Entertainment,Mumbai,22
+jansatta_2024,Entertainment,BJP,19
+jansatta_2024,Entertainment,Pakistan,19
+jansatta_2024,Entertainment,Delhi,18
+jansatta_2024,Entertainment,United States,16
+jansatta_2024,Entertainment,Jammu and Kashmir,15
+jansatta_2024,Health,Arvind Kejriwal,16
+jansatta_2024,Health,Delhi,9
+jansatta_2024,Health,West Bengal,6
+jansatta_2024,Health,United States,4
+jansatta_2024,Health,Joe Biden,3
+jansatta_2024,Health,Jammu and Kashmir,2
+jansatta_2024,Health,Karnataka,2
+jansatta_2024,Health,Kerala,2
+jansatta_2024,Health,Narendra Modi,2
+jansatta_2024,Health,Russia / Ukraine,2
+jansatta_2024,Other,Uttar Pradesh,172
+jansatta_2024,Other,NEET,137
+jansatta_2024,Other,Rajasthan,112
+jansatta_2024,Other,Ayodhya,101
+jansatta_2024,Other,Bihar,101
+jansatta_2024,Other,Delhi,91
+jansatta_2024,Other,Narendra Modi,45
+jansatta_2024,Other,Yogi Adityanath,40
+jansatta_2024,Other,Jammu and Kashmir,39
+jansatta_2024,Other,Maharashtra,35
+jansatta_2024,Politics,BJP,1367
+jansatta_2024,Politics,Narendra Modi,850
+jansatta_2024,Politics,Congress,808
+jansatta_2024,Politics,Uttar Pradesh,286
+jansatta_2024,Politics,Rahul Gandhi,268
+jansatta_2024,Politics,Arvind Kejriwal,203
+jansatta_2024,Politics,Delhi,192
+jansatta_2024,Politics,Haryana,164
+jansatta_2024,Politics,Bihar,157
+jansatta_2024,Politics,AAP,151
+jansatta_2024,Sports,IPL,686
+jansatta_2024,Sports,Virat Kohli,332
+jansatta_2024,Sports,Pakistan,290
+jansatta_2024,Sports,Rohit Sharma,176
+jansatta_2024,Sports,Mumbai,160
+jansatta_2024,Sports,Delhi,138
+jansatta_2024,Sports,Bangladesh,113
+jansatta_2024,Sports,Punjab,86
+jansatta_2024,Sports,Gujarat,75
+jansatta_2024,Sports,United States,75
+jansatta_2024,Tech/Science,Ayodhya,9
+jansatta_2024,Tech/Science,IPL,6
+jansatta_2024,Tech/Science,Narendra Modi,6
+jansatta_2024,Tech/Science,RBI,5
+jansatta_2024,Tech/Science,Bihar,3
+jansatta_2024,Tech/Science,Donald Trump,3
+jansatta_2024,Tech/Science,Arvind Kejriwal,2
+jansatta_2024,Tech/Science,Congress,2
+jansatta_2024,Tech/Science,Delhi,2
+jansatta_2024,Tech/Science,Enforcement Directorate,2
+jansatta_2024,Weather/Environment,Delhi,154
+jansatta_2024,Weather/Environment,IMD,79
+jansatta_2024,Weather/Environment,Uttar Pradesh,27
+jansatta_2024,Weather/Environment,Bihar,8
+jansatta_2024,Weather/Environment,Mumbai,8
+jansatta_2024,Weather/Environment,Gujarat,5
+jansatta_2024,Weather/Environment,Haryana,5
+jansatta_2024,Weather/Environment,Bangladesh,4
+jansatta_2024,Weather/Environment,Kerala,4
+jansatta_2024,Weather/Environment,Punjab,4

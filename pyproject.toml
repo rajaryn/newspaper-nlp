@@ -1,0 +1,13 @@
+[project]
+name = "newspaper-nlp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "indic-nlp-library>=0.92",
+    "nltk>=3.10.3",
+    "pandas>=3.0.6",
+    "requests>=2.34.2",
+    "simplemma>=2.0.0",
+]
