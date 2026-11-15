@@ -12,8 +12,7 @@ For every headline it makes three versions (the report compares them):
   stem     tokens cut to a crude root      (English: Porter stemmer, Hindi: light suffix stripper)
   lemma    tokens turned into dictionary form (simplemma, both languages)
 
-Writes:
-  (all in ds/preprocessed/)
+Writes (all in OUT_DIR = data/preprocessed/):
   train_pre.csv      training rows  = train_seed + your reviewed candidates (test set excluded)
   test_pre.csv       the reviewed test set (gold)
   <paper>_pre.csv    every article of each paper, for classifying later (Phase 7)
@@ -61,6 +60,8 @@ _porter = PorterStemmer()
 
 
 def en_tokens(text):
+    """Lowercase, unify quotes, drop "'s", keep words (incl. hyphenated), then drop stopwords,
+    numbers and 1-letter tokens."""
     text = unicodedata.normalize("NFKC", text).lower().replace("’", "'").replace("‘", "'")
     text = re.sub(r"'s\b", " ", text)
     toks = re.findall(r"[a-z]+(?:-[a-z]+)*|\d+", text)
@@ -96,6 +97,8 @@ _LATIN = re.compile(r"^[a-z]+$")
 
 
 def hi_tokens(text):
+    """Indic NLP normaliser + tokenizer. Devanagari tokens keep only Devanagari letters; English
+    words inside Hindi headlines (e.g. 'ipl') are kept too. Stopwords and 1-letter tokens dropped."""
     text = _hi_norm.normalize(unicodedata.normalize("NFC", text))
     out = []
     for t in indic_tokenize.trivial_tokenize(text, "hi"):
@@ -110,6 +113,7 @@ def hi_tokens(text):
 
 
 def hi_stem_word(t):
+    """Strip the longest matching Hindi suffix, keeping at least 2 letters. English words: Porter."""
     if not _DEVANAGARI.search(t):
         return _porter.stem(t)
     for s in HI_SUFFIXES:
@@ -126,10 +130,13 @@ def hi_lemma(toks):
     return [simplemma.lemmatize(t, lang="hi" if _DEVANAGARI.search(t) else "en") for t in toks]
 
 
+# language -> (tokenize, stem, lemmatize). app.py imports this too, so the live classifier
+# preprocesses typed headlines exactly like the training data.
 PIPE = {"en": (en_tokens, en_stem, en_lemma), "hi": (hi_tokens, hi_stem, hi_lemma)}
 
 
 def add_versions(df):
+    """Add the tokens / stem / lemma columns (each a space-separated string) to a DataFrame."""
     toks, stem, lem = [], [], []
     for text, lang in zip(df["text"], df["lang"]):
         tok_f, stem_f, lem_f = PIPE[lang]
@@ -151,6 +158,7 @@ def read(path):
 
 
 def check_labels(df, name):
+    """Keep only rows whose hand label is one of the 9 categories; report empty labels and typos."""
     df = df.copy()
     df["label"] = df["label"].str.strip()
     if USE_DRAFT_IF_LABEL_EMPTY and "draft_label" in df:
@@ -175,6 +183,8 @@ def main():
     cols = ["paper", "lang", "date", "text", "url", "label"]
     seed["source_of_label"] = seed.get("source_of_label", "url_section")
     cand = cand.assign(source_of_label="keyword_candidate_reviewed")
+    # training = section-labelled rows + reviewed keyword candidates, never a test-set headline;
+    # if a URL is in both, the hand-reviewed candidate label (the later one) wins
     train = pd.concat([seed[cols + ["source_of_label"]], cand[cols + ["source_of_label"]]])
     train = train[~train["url"].isin(gold_urls)].drop_duplicates("url", keep="last")
 

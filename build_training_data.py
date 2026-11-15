@@ -24,6 +24,10 @@ Writes:
 
 Categories: Politics, Sports, Business, Weather/Environment, Crime/Law,
             Entertainment, Tech/Science, Health, Other
+
+After hand-labelling, the finished files go in data/labels/ (gold_labelled.csv,
+candidates_to_check.csv, train_seed.csv), which is where preprocess.py reads them.
+data/combined/ is kept separate so re-running this script can never overwrite your labels.
 """
 
 import re
@@ -66,10 +70,12 @@ KEYWORDS = {
 
 
 def paper_dir(name):
+    """Folder of one paper's files."""
     return DATA / name.rsplit("_", 1)[0]   # "ie_2024" -> data/ie
 
 
 def load_paper(name, lang):
+    """One paper's clean articles + the category of their URL section; 'Drop' sections removed."""
     d = paper_dir(name)
     df = pd.read_csv(d / f"{name}_clean.csv", dtype=str, keep_default_na=False)
     m = pd.read_csv(d / f"{name}_sections_mapped.csv", dtype=str, keep_default_na=False)

@@ -149,6 +149,7 @@ EN_CASE_SENSITIVE = {
     "United States": ["US", "USA"],
 }
 _HI_LETTER = r"[\u0900-\u097F]"
+# compiled once: name -> (English lowercase regex, English CAPITALS regex, Hindi regex); None = not used
 _PATTERNS = {}
 for _name, (_en, _hi) in ENTITIES.items():
     _PATTERNS[_name] = (
@@ -162,10 +163,12 @@ for _name, (_en, _hi) in ENTITIES.items():
 
 # ------------------------------- helpers ------------------------------
 def p(path):
+    """Path relative to the project folder."""
     return ROOT / path
 
 
 def need(path):
+    """Same as p(), but stop with a clear message if the file is missing."""
     if not p(path).exists():
         raise SystemExit(f"Not found: {p(path)}\nFix the path in SETTINGS at the top of analysis.py.")
     return p(path)
@@ -183,6 +186,8 @@ def pct(x):
 
 # ------------------------------ 1. topics -----------------------------
 def classify():
+    """All headlines of both papers with a 'topic': the URL-section category where there is one,
+    otherwise ("Mixed" sections) the Phase 5 model's prediction."""
     frames = []
     for paper, path in PRE_FILES.items():
         df = pd.read_csv(need(path), dtype=str, keep_default_na=False)
@@ -204,6 +209,7 @@ def classify():
 
 # ------------------------------ 2. trends -----------------------------
 def trends(df, findings):
+    """Overall and monthly topic share per paper: 2 charts, 2 tables, findings lines."""
     overall = (df.groupby("paper")["topic"].value_counts(normalize=True)
                  .unstack(0).reindex(CATEGORIES).fillna(0))
     overall.to_csv(p(OUT_RESULTS) / "topic_share_overall.csv")
@@ -260,6 +266,7 @@ def trends(df, findings):
 
 # ------------------------------ 3. events -----------------------------
 def events(df, findings):
+    """For each event: daily share of its topic (or name) in a window around it, baseline vs peak."""
     daily_n = df.groupby(["paper", "date"]).size()
     rows = []
     findings.append("\n## Coverage around key events (daily share of the topic)\n")
@@ -319,6 +326,7 @@ def find_entities(text, lang):
 
 
 def entities(df, findings):
+    """Tag every headline with names from the shared list, count them, and (optionally) run spaCy."""
     df["entities"] = [find_entities(t, l) for t, l in zip(df["text"], df["lang"])]
     ex = df[["paper", "topic", "month", "entities"]].explode("entities").dropna(subset=["entities"])
     total = df.groupby("paper").size()

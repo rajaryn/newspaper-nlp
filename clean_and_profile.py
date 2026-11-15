@@ -1,9 +1,11 @@
+# /// script
+# dependencies = ["pandas"]
+# ///
 """
 Phase 2: clean the scraped CSVs and profile them for the report.
 
-Usage:
-    pip install pandas
-    python clean_and_profile.py
+Run:   uv run clean_and_profile.py
+Edit the SETTINGS block below to change which files are cleaned.
 
 For each input file it writes, next to the input (data/<site>/):
     <name>_clean.csv        cleaned rows (one per article)
@@ -20,11 +22,16 @@ Cleaning steps (each one's row count is printed, so you can report it):
 """
 
 import re
-import sys
 from pathlib import Path
 
 import pandas as pd
 
+# ============================== SETTINGS ==============================
+DATA = Path(__file__).parent / "data"
+INPUTS = [DATA / "ie" / "ie_2024.csv", DATA / "jansatta" / "jansatta_2024.csv"]   # files made by sitemap_scraper / headline_fetcher
+# ======================================================================
+
+# URL path segments that mark a page as not a news article
 JUNK = re.compile(
     r"/(?:videos?|photos?|gallery|live-?blog|liveblog|web-?stories|webstories|horoscope|rashifal|tag|tags|author|topic|podcast)s?/",
     re.I,
@@ -32,6 +39,7 @@ JUNK = re.compile(
 
 
 def clean(path):
+    """Run the 5 cleaning steps on one scraped CSV. Returns (cleaned rows, [(step, rows left)])."""
     df = pd.read_csv(path, dtype=str).fillna("")
     steps = [("raw rows", len(df))]
 
@@ -41,6 +49,7 @@ def clean(path):
     df = df[~df["url"].str.contains(JUNK)]
     steps.append(("after removing videos/photos/live blogs/etc.", len(df)))
 
+    # text = the headline, or the URL slug where the headline couldn't be fetched
     headline = df["headline"].str.strip() if "headline" in df else ""
     slug = df["slug"].str.strip() if "slug" in df else ""
     df["text"] = headline.where(headline != "", slug) if "headline" in df else slug
@@ -56,13 +65,6 @@ def clean(path):
     return df, steps
 
 
-
-# ============================== SETTINGS ==============================
-DATA = Path(__file__).parent / "data"
-INPUTS = [DATA / "ie" / "ie_2024.csv", DATA / "jansatta" / "jansatta_2024.csv"]   # files made by sitemap_scraper / headline_fetcher
-# ======================================================================
-
-
 def main():
     for path in INPUTS:
         p = Path(path)
@@ -71,10 +73,12 @@ def main():
 
         df.to_csv(f"{stem}_clean.csv", index=False, date_format="%Y-%m-%d")
 
+        # every URL section with its article count; the 'category' column is filled in by hand
         sections = df["section"].replace("", "(none)").value_counts().rename_axis("section").reset_index(name="articles")
         sections["category"] = ""  # fill this in by hand
         sections.to_csv(f"{stem}_sections.csv", index=False)
 
+        # articles per day, including days with none (to spot gaps in the sitemap)
         per_day = df.groupby(df["date"].dt.date).size()
         all_days = pd.date_range(df["date"].min(), df["date"].max()).date
         per_day = per_day.reindex(all_days, fill_value=0)

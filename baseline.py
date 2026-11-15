@@ -4,7 +4,7 @@
 """
 Phase 5: baseline classifiers for English and Hindi headlines.
 
-Run:   uv run baselines.py          (a few minutes on a laptop)
+Run:   uv run baseline.py           (a few minutes on a laptop)
 Edit the SETTINGS block below to change folders or what gets compared.
 
 For each language it trains every combination of
@@ -63,6 +63,9 @@ LANG_NAME = {"en": "English (Indian Express)", "hi": "Hindi (Jansatta)"}
 
 
 def make_pipeline(features, model):
+    """Text -> features -> classifier, as one sklearn Pipeline.
+    Features are single words and word pairs (ngram_range=(1, 2)) seen in at least 2 headlines.
+    The text is already tokenized by preprocess.py, so tokens are just space-separated."""
     vec_args = dict(ngram_range=(1, 2), min_df=2, token_pattern=r"\S+", lowercase=False)
     vec = CountVectorizer(**vec_args) if features == "bow" else TfidfVectorizer(sublinear_tf=True, **vec_args)
     if model == "naive_bayes":
@@ -73,6 +76,7 @@ def make_pipeline(features, model):
 
 
 def save_confusion(y_true, y_pred, title, path):
+    """Confusion matrix as a PNG: rows = true label, columns = predicted."""
     labels = [c for c in CATEGORIES if c in set(y_true) | set(y_pred)]
     cm = confusion_matrix(y_true, y_pred, labels=labels)
     fig, ax = plt.subplots(figsize=(8, 7))
@@ -101,6 +105,7 @@ def main():
     for lang in ["en", "hi"]:
         tr, te = train[train["lang"] == lang], test[test["lang"] == lang]
         print(f"\n=== {LANG_NAME[lang]}: {len(tr)} training, {len(te)} test headlines ===")
+        # stratified = every fold keeps the same topic mix as the whole training set
         cv = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=SEED)
         results = []
         for version, features, model in product(VERSIONS, FEATURES, MODELS):
@@ -123,6 +128,7 @@ def main():
         name = f"{best_r['version']} + {best_r['features']} + {best_r['model']}"
         print(f"  -> chosen by CV: {name}  (test accuracy {best_r['test_accuracy']:.3f}, "
               f"macro-F1 {best_r['test_macro_f1']:.3f})")
+        # saved as a dict so later steps know which text version (tokens/stem/lemma) to feed it
         joblib.dump({"pipeline": best_pipe, "version": best_r["version"], "lang": lang},
                     mod / f"best_{lang}.joblib")
 
