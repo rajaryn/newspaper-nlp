@@ -1,0 +1,18 @@
+<!--
+  Shared top bar, included by every page. `page` (passed by app.py) marks the current page.
+  Below it each page adds its own sticky section bar (class="subnav").
+-->
+<header class="appbar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span>News <em>Pulse</em></a>
+  <nav class="pages" aria-label="Pages">
+    <a href="/" class="{{ 'on' if page == 'dashboard' }}" {{ 'aria-current=page' if page == 'dashboard' }}>
+      <b>Dashboard</b><span>46,113 headlines compared</span></a>
+    <a href="/pipeline" class="{{ 'on' if page == 'pipeline' }}" {{ 'aria-current=page' if page == 'pipeline' }}>
+      <b>Pipeline</b><span>one headline, step by step</span></a>
+  </nav>
+  <span class="appbar-meta">
+    <span class="key"><i class="sw s-ie"></i>Indian Express</span><span class="vs">vs</span>
+    <span class="key"><i class="sw s-ja"></i>Jansatta</span><span class="period">Jan–Aug 2024</span>
+  </span>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">◐</button>
+</header>

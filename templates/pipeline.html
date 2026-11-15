@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News Pulse · Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pipeline.css') }}">
+  <script>document.documentElement.dataset.theme = localStorage.getItem("theme") || "";</script>
+</head>
+<body>
+<!--
+  Pipeline page: (1) "Try it" - type a headline, get the model's answer;
+  (2) the same headline followed through every step of the pipeline, one step at a time.
+  Everything on the page comes from one call, POST /api/trace (app.py).
+-->
+<div class="viz-root pipe">
+
+  {% include "_nav.html" %}
+
+  <!-- this page's sections; sticky under the top bar, the one in view is highlighted -->
+  <nav class="subnav" id="sections" aria-label="Page sections">
+    <a href="#try" class="active">Try it</a>
+    <a href="#steps">Step by step</a>
+  </nav>
+
+  <!-- 1. Try it -->
+  <section class="card try" id="try">
+    <h2>Try it</h2>
+    <p class="sub">Any English or Hindi headline. English goes to the Indian Express model, Hindi to the Jansatta model.</p>
+    <textarea id="text" rows="1" spellcheck="false">Rohit Sharma leads India to T20 World Cup win</textarea>
+    <div class="examples" id="examples"></div>
+    <div class="try-out">
+      <div>
+        <p class="label">Predicted topic</p>
+        <p class="answer" id="answer">–</p>
+        <p class="conf" id="conf"></p>
+        <p class="label">Words that pushed it there</p>
+        <div class="evidence" id="evidence"></div>
+      </div>
+      <div class="probs" id="probs"></div>
+    </div>
+  </section>
+
+  <!-- 2. The same headline, step by step -->
+  <section class="journey" id="steps">
+    <div class="journey-head">
+      <div>
+        <h2>Follow it through the pipeline</h2>
+        <p class="sub">The headline above, one step at a time, using the project's own code. Use <kbd>←</kbd> <kbd>→</kbd> or the buttons.</p>
+      </div>
+      <div class="controls">
+        <button class="btn ghost" id="prev" type="button">← Back</button>
+        <button class="btn ghost" id="play" type="button">▶ Play</button>
+        <button class="btn" id="next" type="button">Next →</button>
+        <label class="all"><input type="checkbox" id="showAll"> Show all steps</label>
+      </div>
+    </div>
+    <ol class="rail" id="rail"></ol>
+    <div class="stage" id="stage"></div>
+  </section>
+
+  <footer>
+    Steps 1–2: <code>sitemap_scraper.py</code>, <code>headline_fetcher.py</code>, <code>clean_and_profile.py</code> ·
+    3–6: <code>preprocess.py</code> · 7–9: the model saved by <code>baseline.py</code> · 10: <code>analysis.py</code>
+  </footer>
+</div>
+<script src="{{ url_for('static', filename='pipeline.js') }}"></script>
+</body>
+</html>

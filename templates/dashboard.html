@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News Pulse · Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>document.documentElement.dataset.theme = localStorage.getItem("theme") || "";</script>
+</head>
+<body>
+<div class="viz-root">
+
+  {% include "_nav.html" %}
+
+  <!-- tier 2: this page's sections, sticky under the top bar. The count reflects the filters. -->
+  <nav class="subnav" id="tabs" role="tablist" aria-label="Dashboard sections">
+    <button role="tab" data-tab="overview" class="active">Overview</button>
+    <button role="tab" data-tab="trends">Trends</button>
+    <button role="tab" data-tab="events">Events</button>
+    <button role="tab" data-tab="people">People &amp; places</button>
+    <button role="tab" data-tab="headlines">Headlines</button>
+    <span class="count" id="fCount"></span>
+  </nav>
+
+  <!-- tier 3: filter pills, the same in every section: Period, Paper, Topic, Sort. Each pill shows its
+       current value (highlighted when not the default) and opens a small menu under it. A pill the current
+       section does not use is greyed out. Menus close on scroll, a click elsewhere, or Esc. -->
+  <section class="filters" aria-label="Filters">
+    <div class="pill-wrap" data-filter="period">
+      <button class="pill" type="button" aria-expanded="false"><span class="pill-k">Period</span> <b class="pill-v"></b> <span class="caret">▾</span></button>
+      <div class="pop" hidden>
+        <div class="opt-list" id="fPresets"></div>
+        <div class="dates">
+          <label>From <input type="date" id="fStart"></label>
+          <label>To <input type="date" id="fEnd"></label>
+        </div>
+      </div>
+    </div>
+    <div class="pill-wrap" data-filter="paper">
+      <button class="pill" type="button" aria-expanded="false"><span class="pill-k">Paper</span> <b class="pill-v"></b> <span class="caret">▾</span></button>
+      <div class="pop" hidden><div class="opt-list col" id="fPapers"></div></div>
+    </div>
+    <div class="pill-wrap" data-filter="topic">
+      <button class="pill" type="button" aria-expanded="false"><span class="pill-k">Topic</span> <b class="pill-v"></b> <span class="caret">▾</span></button>
+      <div class="pop wide" hidden><div class="opt-list cols" id="fTopics"></div></div>
+    </div>
+    <div class="pill-wrap" data-filter="sort">
+      <button class="pill" type="button" aria-expanded="false"><span class="pill-k">Sort</span> <b class="pill-v"></b> <span class="caret">▾</span></button>
+      <div class="pop" hidden><div class="opt-list col" id="fSort"></div></div>
+    </div>
+    <button class="reset-link" id="fReset" type="button" hidden>Reset filters</button>
+  </section>
+
+  <main>
+    <!-- Overview -->
+    <section class="panel active" id="tab-overview">
+      <div class="cards" id="ovCards"></div>
+      <div class="grid-2">
+        <article class="card chart-card">
+          <h2>What each paper covered</h2>
+          <p class="sub">% of each paper's headlines, by topic</p>
+          <div class="legend" data-legend></div>
+          <div class="chart" id="ovChart"></div>
+        </article>
+        <article class="card">
+          <h2>The gap</h2>
+          <p class="sub">Percentage points, Jansatta minus Indian Express</p>
+          <div class="chart" id="ovGap"></div>
+          <p class="callout" id="ovCallout"></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Trends -->
+    <section class="panel" id="tab-trends">
+      <div class="toolbar">
+        <p class="sub" id="trSub"></p>
+        <div class="seg" id="trFreq">
+          <button data-v="M" class="on">Month</button><button data-v="W">Week</button>
+        </div>
+      </div>
+      <div class="grid-2" id="trCharts"></div>
+    </section>
+
+    <!-- Events -->
+    <section class="panel" id="tab-events">
+      <div class="event-list" id="evList"></div>
+      <!-- define your own event: a name for it, a date and window, and what to track -->
+      <details class="card custom" id="evCustom">
+        <summary>Define your own event</summary>
+        <form class="ev-form" id="evForm">
+          <label class="ev-wide">Event name
+            <input id="evName" value="Trump rally shooting" placeholder="e.g. Trump rally shooting" maxlength="80"></label>
+          <label>Date <input type="date" id="evDate" value="2024-07-13" min="2024-01-01" max="2024-08-31" required></label>
+          <label>Days before <input type="number" id="evBefore" min="1" max="30" value="7"></label>
+          <label>Days after <input type="number" id="evAfter" min="1" max="30" value="10"></label>
+
+          <div class="ev-track ev-wide">
+            <span class="ev-label">Track</span>
+            <div class="seg" id="evKind"><button type="button" data-v="name" class="on">A name</button><button type="button" data-v="topic">A topic</button></div>
+            <input id="evWhatName" list="peNames" value="Donald Trump" autocomplete="off"
+              placeholder="Any person, party or place, e.g. Donald Trump · or Nitin Gadkari, नितिन गडकरी">
+            <select id="evWhatTopic" hidden></select>
+          </div>
+          <p class="note ev-wide" id="evHelp">Names on the project's list are found in English and Hindi headlines.
+            For any other name, add the Hindi spelling after a comma to track it in Jansatta too.</p>
+          <button class="btn" type="submit">Plot event</button>
+        </form>
+      </details>
+      <article class="card chart-card">
+        <h2 id="evTitle"></h2>
+        <p class="sub" id="evSub"></p>
+        <div class="legend" data-legend></div>
+        <div class="chart" id="evChart"></div>
+        <table class="tbl" id="evTable"></table>
+        <p class="ev-match" id="evMatch"></p>
+        <p class="note" id="evNote"></p>
+      </article>
+    </section>
+
+    <!-- People & places -->
+    <section class="panel" id="tab-people">
+      <!-- search any name: results for that one name -->
+      <article class="card name-search">
+        <h2>Search a name</h2>
+        <p class="sub">Any person, party or place. Names on the project's list (about 75) are found in both languages automatically.
+          For other names, add the Hindi spelling after a comma to search Jansatta too.</p>
+        <form class="search-row" id="nsForm">
+          <input type="search" id="nsQ" list="peNames" value="Rahul Gandhi" placeholder="e.g. Rahul Gandhi  ·  or  Nitin Gadkari, नितिन गडकरी" autocomplete="off">
+          <datalist id="peNames"></datalist>
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <div class="chips" id="nsPicks"></div>
+        <div id="nsOut"></div>
+      </article>
+
+      <!-- the most-mentioned names; click a bar to search it -->
+      <article class="card chart-card">
+        <div class="toolbar tight">
+          <div><h2>Most-mentioned names</h2>
+            <p class="sub" id="peSub">% of headlines mentioning each name · click a bar to search it</p></div>
+          <label>Show top <input type="range" id="peN" min="5" max="30" value="15"> <b id="peNv">15</b></label>
+        </div>
+        <div class="legend" data-legend></div>
+        <div class="chart" id="peChart"></div>
+      </article>
+    </section>
+
+    <!-- Headlines -->
+    <section class="panel" id="tab-headlines">
+      <div class="toolbar">
+        <input type="search" id="hlQ" placeholder="Search headlines (English or हिन्दी)…">
+        <select id="hlSrc">
+          <option value="">Topic from: any</option>
+          <option value="url_section">Topic from: URL section</option>
+          <option value="model">Topic from: model</option>
+        </select>
+      </div>
+      <p class="count" id="hlCount"></p>
+      <ol class="feed" id="hlFeed"></ol>
+      <div class="pager">
+        <button class="btn ghost" id="hlPrev">← Previous</button>
+        <span id="hlPage"></span>
+        <button class="btn ghost" id="hlNext">Next →</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Topics come from the URL section where it names one, otherwise the Phase 5 model
+    (test accuracy: English 0.66, Hindi 0.85). 100 random articles per paper per day.
+  </footer>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='charts.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
