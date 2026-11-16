@@ -1,6 +1,3 @@
-# /// script
-# dependencies = ["requests"]
-# ///
 """
 Step 1 of 2: list the articles in each day's sitemap and save them to a CSV.
 Headlines are filled in afterwards by headline_fetcher.py.
@@ -46,7 +43,7 @@ SITES = {
         "daily": "https://www.jansatta.com/sitemap.xml?yyyy={y}&mm={m:02d}&dd={d:02d}",
     },
 }
-RUN_SITES = ["jansatta"]  # which of SITES to scrape, in order
+RUN_SITES = ['ie', 'jansatta']  # SITES to scrape, in order
 YEAR = 2024
 DATA = Path(__file__).parent / "data"   # CSVs live in data/<site>/
 MONTHS = "1-8"                  # "" = whole year; "9-12" for the rest; "1" for a quick test
@@ -92,10 +89,8 @@ def _cut(r, flag):
 
 def get(url):
     """One GET with a hard total time limit. Returns bytes. Raises on failure."""
-    faulthandler.dump_traceback_later(180, repeat=False, file=sys.stderr)  # report if stuck 3 min
+    faulthandler.dump_traceback_later(180, repeat=False, file=sys.stderr)
     with _session.get(url, timeout=(10, 15), stream=True) as r:
-        # the normal timeout only measures gaps between bytes; a slow-dripping server
-        # never trips it, so a timer cuts the connection after REQUEST_LIMIT seconds
         timed_out = threading.Event()
         timer = threading.Timer(REQUEST_LIMIT, _cut, (r, timed_out))
         timer.daemon = True
@@ -124,7 +119,6 @@ def get(url):
 
 
 def fetch(url, check=None):
-    """get() with retries and back-off; `check(data)` must accept the reply. Bytes or None."""
     if not robots.can_fetch(HEADERS["User-Agent"], url):
         print(f"  robots.txt disallows {url}, skipping")
         return None
